@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-container">
+        <div class="sidebar">
+            <h1>Створити новий тег</h1>
+            <a class="btn" href="{{ path('tag_index') }}">Повернутися до списку тегів</a>
+        </div>
+
+        <div class="content">
+            <div class="form-container">
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+
+                <form method="post" class="tag-form">
+                    <label for="tagName">Назва тегу:</label>
+                    <input type="text" name="tagName" id="tagName" placeholder="Введіть назву тегу">
+                    <button type="submit">Створити</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

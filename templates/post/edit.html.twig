@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-container">
+        <div class="sidebar">
+            <h1>Редагувати пост</h1>
+            <a class="btn" href="{{ path('post_index') }}">Повернутися до списку постів</a>
+        </div>
+
+        <div class="content">
+            <div class="form-container">
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+
+                <form method="post" class="tag-form">
+                    <label for="title">Заголовок:</label>
+                    <input type="text" name="title" id="title" value="{{ post.title }}">
+
+                    <label for="content">Контент:</label>
+                    <textarea name="content" id="content">{{ post.content }}</textarea>
+
+                    <label>Теги:</label>
+                    {% for tag in tags %}
+                        <input type="checkbox" name="tags[]" value="{{ tag.id }}"
+                               {% if tag in post.tags %}checked{% endif %}>
+                        {{ tag.tagName }}<br>
+                    {% endfor %}
+
+                    <button type="submit">Зберегти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

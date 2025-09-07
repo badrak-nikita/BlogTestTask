@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-container">
+        <div class="sidebar">
+            <h1>{{ post.title }}</h1>
+            <a class="btn" href="{{ path('post_index') }}">Повернутися до списку постів</a>
+        </div>
+
+        <div class="content">
+            <div class="form-container">
+                <p>{{ post.content }}</p>
+
+                <p><strong>Теги:</strong>
+                    {% for tag in post.tags %}
+                        {{ tag.tagName }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+
+                <p><strong>Дата створення:</strong> {{ post.createdAt|date('d.m.Y H:i') }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

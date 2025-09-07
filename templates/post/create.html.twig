@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-container">
+        <div class="sidebar">
+            <h1>Створити новий пост</h1>
+            <a class="btn" href="{{ path('post_index') }}">Повернутися до списку постів</a>
+        </div>
+
+        <div class="content">
+            <div class="form-container">
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+
+                <form method="post" class="tag-form">
+                    <label for="title">Заголовок:</label>
+                    <input type="text" name="title" id="title" placeholder="Введіть заголовок">
+
+                    <label for="content">Контент:</label>
+                    <textarea name="content" id="content" placeholder="Введіть текст"></textarea>
+
+                    <label>Теги:</label>
+                    <input type="text" id="tagInput" placeholder="Пошук тегу">
+                    <div id="suggestions" style="border:1px solid #ccc; padding:5px; display:none; max-height:100px; overflow-y:auto; background:white;"></div>
+
+                    <div id="checkboxes">
+                        {% for tag in tags %}
+                            <input type="checkbox" name="tags[]" value="{{ tag.id }}" id="tag-{{ tag.id }}">
+                            <label for="tag-{{ tag.id }}">{{ tag.tagName }}</label><br>
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit">Створити</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tags = [
+            {% for tag in tags %}
+            {id: {{ tag.id }}, name: "{{ tag.tagName|e('js') }}"}{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        const input = document.getElementById('tagInput');
+        const suggestions = document.getElementById('suggestions');
+
+        input.addEventListener('input', function() {
+            const value = this.value.toLowerCase().trim();
+            suggestions.innerHTML = '';
+            if (!value) {
+                suggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = tags.filter(tag => tag.name.toLowerCase().includes(value));
+            if (matches.length > 0) {
+                matches.forEach(tag => {
+                    const div = document.createElement('div');
+                    div.textContent = tag.name;
+                    div.style.cursor = 'pointer';
+                    div.style.padding = '3px';
+                    div.addEventListener('click', () => {
+                        const checkbox = document.getElementById('tag-' + tag.id);
+                        if (checkbox) checkbox.checked = true;
+                        input.value = '';
+                        suggestions.style.display = 'none';
+                    });
+                    suggestions.appendChild(div);
+                });
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        });
+    </script>
+{% endblock %}

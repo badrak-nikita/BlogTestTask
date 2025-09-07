@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-container">
+        <h1>Список тегів</h1>
+
+        <div class="top-controls">
+            <a class="create-btn" href="{{ path('tag_new') }}">Створити новий тег</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="tag-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Назва тегу</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tag in tags %}
+                    <tr>
+                        <td>{{ tag.id }}</td>
+                        <td>{{ tag.tagName }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">Тегів немає</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

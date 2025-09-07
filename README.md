@@ -9,5 +9,5 @@
    docker-compose exec web php bin/console doctrine:migrations:migrate
 5. Я підготував фікстуру, щоб одразу заповнити базу тестовими значеннями
    docker-compose exec web php bin/console doctrine:fixtures:load
-7. Контейнер web має слухати порт 8000, db — порт 3306
+7. Контейнер web має слухати порт 8000, db порт 3306
 8. У браузерi: http://localhost:8000/
